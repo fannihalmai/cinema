@@ -12,9 +12,7 @@
 int main(int argc, const char * argv[]) {
     p_list liste_film;
     liste_film = init();
-    
     menu(liste_film);
-    
-    free(liste_film);
+    free_mem(liste_film);
     return 0;
 }

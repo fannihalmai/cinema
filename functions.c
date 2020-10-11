@@ -77,6 +77,7 @@ void affiche_film_unique (p_list movie)
     
     switch (choix) {
         case 'a':
+            //movie=movie->p_suiv;
             break;
         case 'b':
             movie=movie->p_suiv;
@@ -92,23 +93,33 @@ void affiche_film_unique (p_list movie)
     printf("Titre: %s\n",movie->data->titre);
     printf("Annee: %i\n",movie->data->annee);
     printf("Duree: %i\n",movie->data->duree);
-    printf("Genre: %s",movie->data->genre);
+    printf("Genre: %s\n",movie->data->genre);
     printf("Realisateur: %s %s\n",movie->data->real->prenom,movie->data->real->nom);
     printf("Acteurs principaux: %s %s, %s %s, %s %s\n\n",movie->data->acteur1->prenom,movie->data->acteur1->nom,movie->data->acteur2->prenom,movie->data->acteur2->nom,movie->data->acteur3->prenom,movie->data->acteur3->nom);
 }
 
+/* Lire user input sur la console et renvoyer char en fonction du titre */
 char choix_film(void){
-    char choix;
-    printf("Quel film souhaitez-vous afficher? (a/b/c)\na) Fight Club\nb) Jurrassic Parc\nc) Retour vers le futur\n");
-    scanf("%c", &choix);
+    char choix[40];
     
-    while (choix!='a' && choix!='b' && choix!='b'){
-        printf("Veuillez choisir a, b ou c\n");
-        scanf("%c", &choix);
+    fflush(stdin);
+    printf("Quel film souhaitez-vous afficher?\n");
+    fgets(choix, 40, stdin);
+    
+    if (strcmp(choix, "Retour vers le futur\n") == 0){
+        return 'a';
+    } else if (strcmp(choix, "Jurrassic Parc\n") == 0){
+        return 'b';
+    }else if (strcmp(choix, "Fight Club\n") == 0){
+        return 'c';
+    } else {
+        printf("Le film n'a pas ete retrouve.\n");
+        exit(1);
     }
-    return choix;
+    
 }
 
+/* Affichage de tous les films dans p_liste */
 void affichage_films (p_list movie)
 {
     while (movie!=NULL)
@@ -119,19 +130,28 @@ void affichage_films (p_list movie)
         printf("Genre: %s\n",movie->data->genre);
         printf("Realisateur: %s %s\n",movie->data->real->prenom,movie->data->real->nom);
         printf("Acteurs principaux: %s %s, %s %s, %s %s\n\n",movie->data->acteur1->prenom,movie->data->acteur1->nom,movie->data->acteur2->prenom,movie->data->acteur2->nom,movie->data->acteur3->prenom,movie->data->acteur3->nom);
-        movie = movie -> p_suiv;
+        if (movie -> p_suiv!= NULL){
+            movie = movie -> p_suiv;
+        }
+        else{
+            exit(1);
+        }
     }
 }
 
+
+/* Affichage de tous les realisateurs et leur donnees */
 void affichage_realisateurs(p_list movie){
     while (movie!=NULL){
         printf("Realisateur: %s %s\n",movie->data->real->prenom,movie->data->real->nom);
         printf("Date de naissance: %d/%d/%d\n",movie->data->real->date_n.annee,movie->data->real->date_n.mois,movie->data->real->date_n.jour);
-        printf("Nationalite: %s\n",movie->data->real->nationalite);
+        printf("Nationalite: %s\n\n",movie->data->real->nationalite);
         movie = movie -> p_suiv;
     }
 }
 
+
+/* Initialisation de p_liste avec les donnees stockees dans tab_film */
 p_list insertion_debut (p_list tete, char* tab_film[])
 {
     p_list temp; //Noeud à retourner
@@ -142,36 +162,20 @@ p_list insertion_debut (p_list tete, char* tab_film[])
     temp->data->real = (p_artist)malloc(sizeof(artist));
     temp->data->real->prenom = (char*)malloc((strlen(tab_film[2])+1)*sizeof(char));
     temp->data->real->nom = (char*)malloc((strlen(tab_film[3])+1)*sizeof(char));
-    temp->data->real->date_n.jour = (int)malloc((sizeof(int)));
-    temp->data->real->date_n.mois = (int)malloc((sizeof(int)));
-    temp->data->real->date_n.annee = (int)malloc((sizeof(int)));
     temp->data->real->nationalite = (char*)malloc((strlen(tab_film[7])+1)*sizeof(char));
-
     temp->data->acteur1 = (p_artist)malloc(sizeof(artist));
     temp->data->acteur2 = (p_artist)malloc(sizeof(artist));
     temp->data->acteur3 = (p_artist)malloc(sizeof(artist));
-
     temp->data->acteur1->prenom = (char*)malloc((strlen(tab_film[8])+1)*sizeof(char));
     temp->data->acteur1->nom = (char*)malloc((strlen(tab_film[9])+1)*sizeof(char));
     temp->data->acteur2->prenom = (char*)malloc((strlen(tab_film[14])+1)*sizeof(char));
     temp->data->acteur2->nom = (char*)malloc((strlen(tab_film[15])+1)*sizeof(char));
     temp->data->acteur3->prenom = (char*)malloc((strlen(tab_film[20])+1)*sizeof(char));
     temp->data->acteur3->nom = (char*)malloc((strlen(tab_film[21])+1)*sizeof(char));
-    
-    temp->data->acteur1->date_n.jour = (int)malloc((sizeof(int)));
-    temp->data->acteur1->date_n.mois = (int)malloc((sizeof(int)));
-    temp->data->acteur1->date_n.annee = (int)malloc((sizeof(int)));
     temp->data->acteur1->nationalite = (char*)malloc((strlen(tab_film[13])+1)*sizeof(char));
-    temp->data->acteur2->date_n.jour = (int)malloc((sizeof(int)));
-    temp->data->acteur2->date_n.mois = (int)malloc((sizeof(int)));
-    temp->data->acteur2->date_n.annee = (int)malloc((sizeof(int)));
     temp->data->acteur2->nationalite = (char*)malloc((strlen(tab_film[19])+1)*sizeof(char));
-    temp->data->acteur3->date_n.jour = (int)malloc((sizeof(int)));
-    temp->data->acteur3->date_n.mois = (int)malloc((sizeof(int)));
-    temp->data->acteur3->date_n.annee = (int)malloc((sizeof(int)));
     temp->data->acteur3->nationalite = (char*)malloc((strlen(tab_film[25])+1)*sizeof(char));
     
-
     strcpy(temp->data->titre, tab_film[0]);
     temp->data->annee = atoi(tab_film[1]);
     strcpy(temp->data->real->prenom, tab_film[2]);
@@ -206,7 +210,31 @@ p_list insertion_debut (p_list tete, char* tab_film[])
 
     temp->data->genre = (char*)malloc((strlen(tab_film[27])+1)*sizeof(char));
     strcpy(temp->data->genre, tab_film[27]);
-    temp -> p_suiv = tete; //Le nouveau noeuds pointe vers le premier noeuds de la liste
+    temp -> p_suiv = tete;
     return temp;
 }
 
+
+/* Liberer la memoire des pointeurs */
+void free_mem(p_list tete){
+    while (tete!=NULL) {
+        free(tete->data->titre);
+        free(tete->data->real->nom);
+        free(tete->data->real->prenom);
+        free(tete->data->real->nationalite);
+        free(tete->data->real);
+        free(tete->data->acteur1->nationalite);
+        free(tete->data->acteur1->prenom);
+        free(tete->data->acteur1->nom);
+        free(tete->data->acteur2->nationalite);
+        free(tete->data->acteur2->prenom);
+        free(tete->data->acteur2->nom);
+        free(tete->data->acteur3->nationalite);
+        free(tete->data->acteur3->prenom);
+        free(tete->data->acteur3->nom);
+        free(tete->data->acteur1);
+        free(tete->data->acteur2);
+        free(tete->data->acteur3);
+        free(tete->data->genre);
+    }
+}

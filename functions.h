@@ -60,5 +60,7 @@ void affichage_films(p_list);
 void affichage_realisateurs(p_list);
 void affiche_film_unique(p_list);
 char choix_film(void);
+void free_mem(p_list);
 
 #endif /* functions_h */
+
