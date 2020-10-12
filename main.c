@@ -14,5 +14,6 @@ int main(int argc, const char * argv[]) {
     liste_film = init();
     menu(liste_film);
     free_mem(liste_film);
+    free(liste_film);
     return 0;
 }

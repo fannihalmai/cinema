@@ -17,7 +17,7 @@ p_list init(void){
     char* info;
     int i=0;
     
-    fptr = fopen("/Users/fannihalmai/Desktop/films.txt", "r");
+    fptr = fopen("films.txt", "r");
 
     if (fptr == NULL)
     {
@@ -129,7 +129,7 @@ void affichage_films (p_list movie)
         printf("Duree: %i\n",movie->data->duree);
         printf("Genre: %s\n",movie->data->genre);
         printf("Realisateur: %s %s\n",movie->data->real->prenom,movie->data->real->nom);
-        printf("Acteurs principaux: %s %s, %s %s, %s %s\n\n",movie->data->acteur1->prenom,movie->data->acteur1->nom,movie->data->acteur2->prenom,movie->data->acteur2->nom,movie->data->acteur3->prenom,movie->data->acteur3->nom);
+        printf("Acteurs principaux: %s %s, %s %s, %s %s\n\n", movie->data->acteur1->prenom,movie->data->acteur1->nom,movie->data->acteur2->prenom,movie->data->acteur2->nom,movie->data->acteur3->prenom,movie->data->acteur3->nom);
         if (movie -> p_suiv!= NULL){
             movie = movie -> p_suiv;
         }
@@ -215,26 +215,36 @@ p_list insertion_debut (p_list tete, char* tab_film[])
 }
 
 
-/* Liberer la memoire des pointeurs */
+ /*Liberer la memoire des pointeurs */
 void free_mem(p_list tete){
     while (tete!=NULL) {
-        free(tete->data->titre);
-        free(tete->data->real->nom);
-        free(tete->data->real->prenom);
-        free(tete->data->real->nationalite);
-        free(tete->data->real);
-        free(tete->data->acteur1->nationalite);
-        free(tete->data->acteur1->prenom);
-        free(tete->data->acteur1->nom);
-        free(tete->data->acteur2->nationalite);
-        free(tete->data->acteur2->prenom);
-        free(tete->data->acteur2->nom);
-        free(tete->data->acteur3->nationalite);
-        free(tete->data->acteur3->prenom);
-        free(tete->data->acteur3->nom);
-        free(tete->data->acteur1);
-        free(tete->data->acteur2);
-        free(tete->data->acteur3);
-        free(tete->data->genre);
+//        free(tete->data->acteur1);
+//        free(tete->data->acteur2);
+//        free(tete->data->acteur3);
+//        free(tete->data->acteur1->nationalite);
+//        free(tete->data->acteur2->nationalite);
+//        free(tete->data->acteur3->nationalite);
+//        free(tete->data->acteur1->nom);
+//        free(tete->data->acteur1->nom);
+//        free(tete->data->acteur1->nom);
+//        free(tete->data->acteur1->prenom);
+//        free(tete->data->acteur1->prenom);
+//        free(tete->data->acteur1->prenom);
+//        free(tete->data->acteur2->nom);
+//        free(tete->data->acteur2->nom);
+//        free(tete->data->acteur2->nom);
+//        free(tete->data->acteur2->prenom);
+//        free(tete->data->acteur2->prenom);
+//        free(tete->data->acteur2->prenom);
+//        free(tete->data->acteur3->nom);
+//        free(tete->data->acteur3->nom);
+//        free(tete->data->acteur3->nom);
+//        free(tete->data->acteur3->prenom);
+//        free(tete->data->acteur3->prenom);
+//        free(tete->data->acteur3->prenom);
+//        free(tete->data->titre);
+//        free(tete->data->real);
+//        free(tete->data->genre);
+        
     }
 }
